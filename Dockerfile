@@ -8,10 +8,10 @@ WORKDIR /app
 COPY . /app
 
 # Build the application
-RUN go build -o kasir_app .
+RUN go build -o kasir_app 
 
 # Expose port 8080
 EXPOSE 8080
 
 # Define the entry point for the container
-CMD ["./app/kasir_app"]
+ENTRYPOINT ["/app/kasir_app"]
