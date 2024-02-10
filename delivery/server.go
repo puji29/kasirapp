@@ -25,14 +25,14 @@ func (s *Server) initRouter() {
 
 func (s *Server) Run() {
 	s.initRouter()
-	if err := s.engine.Run(fmt.Sprintf(":%s", s.port)); err != nil {
-		panic(fmt.Errorf("server not running on port %s", s.port, err.Error()))
+	if err := s.engine.Run(s.port); err != nil {
+		panic(fmt.Errorf("server not running on host %s, becauce error %v", s.port, err.Error()))
 	}
 }
 
 func NewSever() *Server {
 	cfg, _ := config.NewConfig()
-	dsn := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", cfg.Host, cfg.Port, cfg.User, cfg.Password, cfg.Name)
+	dsn := fmt.Sprintf("host=%s port=%s user=%s password=%s dbName=%s sslmode=disable", cfg.Host, cfg.Port, cfg.User, cfg.Password, cfg.Name)
 	db, err := sql.Open(cfg.Driver, dsn)
 	if err != nil {
 		panic("connection error")

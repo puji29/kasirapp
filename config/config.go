@@ -28,8 +28,9 @@ type Config struct {
 func (c *Config) ConfigConfiguration() error {
 	err := godotenv.Load()
 	if err != nil {
-		return fmt.Errorf("missing file env", err.Error())
+		return fmt.Errorf("failed to load .env file: %v", err)
 	}
+
 	c.DbConfig = DbConfig{
 		Host:     os.Getenv("DB_HOST"),
 		Port:     os.Getenv("DB_PORT"),
@@ -43,9 +44,10 @@ func (c *Config) ConfigConfiguration() error {
 		ApiPort: os.Getenv("API_PORT"),
 	}
 
-	if c.Host == "" || c.Port == "" || c.User == "" || c.Password == "" || c.Name == "" || c.Driver == "" || c.ApiPort == "" {
-		return fmt.Errorf("missing require environment")
+	if c.DbConfig.Host == "" || c.DbConfig.Port == "" || c.DbConfig.User == "" || c.DbConfig.Password == "" || c.DbConfig.Name == "" || c.DbConfig.Driver == "" || c.ApiConfig.ApiPort == "" {
+		return fmt.Errorf("missing required environment variables")
 	}
+
 	return nil
 }
 
