@@ -1,11 +1,17 @@
-FROM golang:alpine
+# Use the official Go image as the base image
+FROM golang:1.20
 
+# Set the working directory in the container
 WORKDIR /app
 
-COPY . .
-COPY .env /app
+# Copy the application files into the working directory
+COPY . /app
 
-RUN go mod tidy
-RUN go build -o kasir-app
+# Build the application
+RUN go build -o main .
 
-ENTRYPOINT ["/app/kasir-app"]
+# Expose port 8080
+EXPOSE 8080
+
+# Define the entry point for the container
+CMD ["./main"]
