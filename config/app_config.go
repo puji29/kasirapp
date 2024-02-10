@@ -5,4 +5,5 @@ const (
 
 	//Product
 	ProductPost = "/products"
+	ProductGet  = "/products"
 )

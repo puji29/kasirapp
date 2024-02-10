@@ -8,10 +8,16 @@ import (
 
 type ProductUsecase interface {
 	RegisterNewProduct(payload model.Product) (model.Product, error)
+	FindAllProduct() ([]model.Product, error)
 }
 
 type productUsecase struct {
 	repo repository.ProductRepository
+}
+
+// FindAllProduct implements ProductUsecase.
+func (u *productUsecase) FindAllProduct() ([]model.Product, error) {
+	return u.repo.LIst()
 }
 
 func (u *productUsecase) RegisterNewProduct(payload model.Product) (model.Product, error) {

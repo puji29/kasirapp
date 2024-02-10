@@ -29,8 +29,18 @@ func (p *ProductController) createHandler(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": product})
 }
 
+func (p *ProductController) listHandler(c *gin.Context) {
+	product, err := p.productUc.FindAllProduct()
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, err.Error())
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"data": product})
+}
+
 func (p *ProductController) Route() {
 	p.rg.POST(config.ProductPost, p.createHandler)
+	p.rg.GET(config.ProductGet, p.listHandler)
 }
 
 func NewProductController(productUc usecase.ProductUsecase, rg *gin.RouterGroup) *ProductController {
